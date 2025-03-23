@@ -80,6 +80,10 @@ func TestDeleteAccount(t *testing.T) {
 }
 
 func TestListAccount(t *testing.T) {
+	for range 10 {
+		createRandomAccount(t)
+	}
+
 	arg := ListAccountsParams{
 		Limit:  5,
 		Offset: 5,
