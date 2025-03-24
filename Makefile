@@ -19,4 +19,13 @@ sqlc:
 test:
 	go test -v -cover ./...
 
-.PHONY: postgres createdb dropdb migrateup migratedown sqlc test
+backup:
+	docker exec -t postgres17 pg_dump -U root simple_bank > backup.sql
+
+restore:
+	cat backup.sql | docker exec -i postgres17 psql -U root -d simple_bank
+
+server:
+	go run main.go
+
+.PHONY: postgres createdb dropdb migrateup migratedown sqlc test server backup restore
